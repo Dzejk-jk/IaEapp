@@ -1,0 +1,25 @@
+﻿@using IaEapp.DTO
+@model TransactionDTO
+
+<h4>Vytvoření transakce</h4>
+<form asp-action="Edit">
+	@Html.AntiForgeryToken()
+	<div class="form-group">
+		<div asp-validation-summary="All" class="text-danger"></div>
+		<label asp-for="Description"></label>
+		<input type="text" asp-for="Description" class="form-control" />
+		<label asp-for="Amount"></label>
+		<input type="number" asp-for="Amount" class="form-control" />
+		<label asp-for="Date"></label>
+		<input type="date" asp-for="Date" class="form-control" />
+		<label asp-for="TransactionCategoryId"></label>
+		<select class="form-control" asp-for="TransactionCategoryId" asp-items="@ViewData["Categories"] as SelectList"></select>
+	</div>
+	<input class="btn btn-success" type="submit" value="Update" />
+</form>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

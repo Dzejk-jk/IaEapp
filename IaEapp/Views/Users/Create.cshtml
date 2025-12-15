@@ -1,0 +1,23 @@
+﻿@model UserViewModel
+@{
+	ViewData["Title"] = "Vytvoření uživatele";
+}
+<h1>Vytvoření uživatele</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post">
+	@Html.AntiForgeryToken()
+	<div>
+		<label asp-for="UserName"></label>
+		<input asp-for="UserName" class="form-control" />
+	</div>
+	<div>
+		<label asp-for="Email"></label>
+		<input asp-for="Email" class="form-control" />
+	</div>
+	<div>
+		<label asp-for="Password"></label>
+		<input asp-for="Password" class="form-control" />
+	</div>
+	<button type="submit" class="btn btn-primary">Create</button>
+</form>

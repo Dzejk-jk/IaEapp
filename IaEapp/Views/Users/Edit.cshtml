@@ -1,0 +1,28 @@
+﻿@model AppUser
+@{ 
+ ViewData["Title"] = "Změna hesla"; 
+} 
+<h1>Změna hesla</h1> 
+<a asp-action="Index" class="btn btn-secondary">Zpět</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Edit" method="post">
+	@Html.AntiForgeryToken()
+	<div>
+		<label asp-for="Id"></label>
+		<input asp-for="Id" class="form-control" disabled />
+	</div>
+	<div>
+		<label asp-for="UserName"></label>
+		<input asp-for="UserName" class="form-control" disabled />
+	</div>
+	<div>
+		<label asp-for="Email"></label>
+		<input asp-for="Email" type="email" class="form-control" readonly/>
+	</div>
+	<div>
+		<label for="password">Heslo</label>
+		<input name="password" class="form-control" />
+	</div>
+	<button type="submit" class="btn btn-primary">Uložit</button>
+</form>

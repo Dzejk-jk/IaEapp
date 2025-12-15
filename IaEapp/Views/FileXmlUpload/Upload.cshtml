@@ -1,0 +1,62 @@
+﻿@using IaEapp.Models
+@model IEnumerable<TransactionTemp>
+
+<div class="mb-3">
+    <form asp-action="ClearTempTransactions" method="post" class="d-inline">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-warning">Zrušit všechny dočasné transakce</button>
+    </form>
+
+    <form asp-action="Dashboard" method="post" class="d-inline">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-secondary">Zpět na přehled</button>
+    </form>
+
+    <form asp-action="CreateAll" method="post" class="d-inline">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Vytvořit všechny transakce</button>
+    </form>
+</div>
+
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Popis</th>
+            <th>Částka</th>
+            <th>Kategorie</th>
+            <th>Označit</th>
+            <th>Přidat</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                <td>@item.Description</td>
+                <td>@item.Amount</td>
+                <td>Ostatní</td>
+                <td>
+                    <form asp-action="Delete" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger">Odebrat</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Date" value="@item.Date" />
+                        <input type="hidden" name="Description" value="@item.Description" />
+                        <input type="hidden" name="Amount" value="@item.Amount" />
+                        <input type="hidden" name="TransactionCategoryId" value="@item.TransactionCategoryId" />
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <button type="submit" class="btn btn-sm btn-dark">
+                            Přidat
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

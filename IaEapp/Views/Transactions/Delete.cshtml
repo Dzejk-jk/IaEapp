@@ -1,0 +1,16 @@
+﻿@using IaEapp.DTO
+@model TransactionDTO
+
+<h4>Opravdu chcete smazat tuto transakci? </h4>
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+	@Html.AntiForgeryToken()
+	<div class="form-group">
+		<label asp-for="@Model.Description"></label>
+		<input type="text" asp-for="@Model.Description" class="form-control" readonly />
+		<label asp-for="@Model.TransactionCategoryId"></label>
+		<input type="text" asp-for="@Model.TransactionCategoryId" class="form-control" readonly />
+		<label asp-for="@Model.Amount"></label>
+		<input type="number" asp-for="@Model.Amount" class="form-control" readonly />
+	</div>
+	<input type="submit" class="btn btn-danger" value="Delete" />
+</form>

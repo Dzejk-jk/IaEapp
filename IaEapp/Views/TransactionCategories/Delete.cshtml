@@ -1,0 +1,12 @@
+﻿@using IaEapp.DTO
+@model TransactionCategoryDTO
+
+<h4>Opravdu chcete smazat tuto kategorii?</h4>
+<form asp-action="Delete">
+	@Html.AntiForgeryToken()
+	<div class="form-group">
+		<label asp-for="Name"></label>
+		<input type="text" asp-for="Name" class="form-control" readonly />
+	</div>
+	<input class="btn btn-success" type="submit" value="Delete" />
+</form>

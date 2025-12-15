@@ -1,0 +1,138 @@
+﻿@using IaEapp.Models
+@model IEnumerable<Transaction>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="bg-info text-white">Index</h1>
+    @Model
+    @if (User?.Identity?.IsAuthenticated ?? false) {
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-dark">Odhlásit</a>
+    }
+
+</div>
+
+<div>
+    <canvas style="max-width: 450px; max-height: 450px" id="chartAllTime"></canvas>
+</div>
+
+<div>
+    <canvas style="max-width: 450px; max-height: 450px" id="chartLastMonth"></canvas>
+</div>
+
+
+<div>
+    <canvas style="max-width: 450px; max-height: 450px" id="chartThisMonth"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Načtení všech grafů po načtení stránky
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Graf pro celkový přehled
+        const ctxAllTime = document.getElementById('chartAllTime');
+        if (ctxAllTime) {
+            fetch('/Home/GetChart')
+                .then(response => response.json())
+                .then(data => {
+                    new Chart(ctxAllTime, {
+                        type: 'pie',
+                        data: {
+                            labels: data.map(d => d.categoryName),
+                            datasets: [{
+                                data: data.map(d => d.total),
+                                backgroundColor: [
+                                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                                    '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'right'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Celkový přehled'
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
+        // 2. Graf za minulý měsíc
+        const ctxLastMonth = document.getElementById('chartLastMonth');
+        if (ctxLastMonth) {
+            fetch('/Home/GetChartLastMonth')
+                .then(response => response.json())
+                .then(data => {
+                    new Chart(ctxLastMonth, {
+                        type: 'pie',
+                        data: {
+                            labels: data.map(d => d.categoryName),
+                            datasets: [{
+                                data: data.map(d => d.total),
+                                backgroundColor: [
+                                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                                    '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'right'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Minulý měsíc'
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
+        // 3. Graf za tento měsíc
+        const ctxThisMonth = document.getElementById('chartThisMonth');
+        if (ctxThisMonth) {
+            fetch('/Home/GetChartThisMonth')
+                .then(response => response.json())
+                .then(data => {
+                    new Chart(ctxThisMonth, {
+                        type: 'pie',
+                        data: {
+                            labels: data.map(d => d.categoryName),
+                            datasets: [{
+                                data: data.map(d => d.total),
+                                backgroundColor: [
+                                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                                    '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'right'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Tento měsíc'
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+    });
+</script>

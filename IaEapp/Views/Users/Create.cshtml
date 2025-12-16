@@ -1,23 +1,39 @@
 ﻿@model UserViewModel
+
 @{
-	ViewData["Title"] = "Vytvoření uživatele";
+    ViewData["Title"] = "Vytvořit uživatele";
 }
-<h1>Vytvoření uživatele</h1>
-<a asp-action="Index" class="btn btn-secondary">Back</a>
-<div asp-validation-summary="All" class="text-danger"></div>
-<form method="post">
-	@Html.AntiForgeryToken()
-	<div>
-		<label asp-for="UserName"></label>
-		<input asp-for="UserName" class="form-control" />
-	</div>
-	<div>
-		<label asp-for="Email"></label>
-		<input asp-for="Email" class="form-control" />
-	</div>
-	<div>
-		<label asp-for="Password"></label>
-		<input asp-for="Password" class="form-control" />
-	</div>
-	<button type="submit" class="btn btn-primary">Create</button>
-</form>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header fw-semibold">Vytvoření uživatele</div>
+            <div class="card-body">
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="All" class="alert alert-danger d-none"></div>
+                    <div class="mb-3">
+                        <label asp-for="UserName" class="form-label"></label>
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" type="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">Zpět</a>
+                        <button type="submit" class="btn btn-success">Vytvořit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

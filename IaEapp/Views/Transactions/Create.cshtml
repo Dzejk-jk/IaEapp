@@ -1,23 +1,45 @@
 ﻿@using IaEapp.DTO
 @model TransactionDTO
 
-<h4>Vytvoření transakce</h4>
-<form asp-action="Create">
-	@Html.AntiForgeryToken()
-	<div class="form-group">
-		<div asp-validation-summary="All" class="text-danger"></div>
-		<label asp-for="Description"></label>
-		<input type="text" asp-for="Description" class="form-control" />
-		<label asp-for="Amount"></label>
-		<input type="number" asp-for="Amount" class="form-control" />
-		<label asp-for="TransactionCategoryId" ></label>
-		<select class="form-control" asp-for="TransactionCategoryId" asp-items="@ViewData["Categories"] as SelectList"></select>
-	</div>
-	<input class="btn btn-success" type="submit" value="Create" />
-</form>
+@{
+    ViewData["Title"] = "Vytvořit transakci";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header fw-semibold">Vytvoření transakce</div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="All" class="alert alert-danger d-none" id="validationSummary"></div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <input asp-for="Description" class="form-control" placeholder="Např. Nájem, Výplata…" />
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Amount" class="form-label"></label>
+                        <input asp-for="Amount" type="number" step="0.01" class="form-control" placeholder="Částka v Kč" />
+                        <span asp-validation-for="Amount" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="TransactionCategoryId" class="form-label"></label>
+                        <select asp-for="TransactionCategoryId" class="form-select" asp-items="@(ViewData["Categories"] as SelectList)">
+                            <option value="">-- vyber kategorii --</option>
+                        </select>
+                        <span asp-validation-for="TransactionCategoryId" class="text-danger small"></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Zpět</a>
+                        <button type="submit" class="btn btn-success">Uložit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
-	@{
-		<partial name="_ValidationScriptsPartial" />
-	}
+    <partial name="_ValidationScriptsPartial" />
 }

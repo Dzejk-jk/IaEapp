@@ -1,30 +1,47 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model IEnumerable<IdentityRole>
+
 @{
-	ViewData["Title"] = "Role";
+    ViewData["Title"] = "Role";
 }
-<h1 class="bg-info text-white">Role</h1>
-<a asp-action="Create" class="btn btn-secondary">Vytvořit roli</a>
-<table class="table table-sm table-bordered">
-	<tr>
-		<th>Název</th>
-		<th>Upravit</th>
-		<th>Smazat</th>
-		<th>ID</th>
-	</tr>
-	@foreach (var role in Model) {
-		<tr>
-			<td>@role.Name</td>
-			<td><a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@role.Id">Upravit</a></td>
-			<td>
-				<form asp-action="Delete" asp-route-id="@role.Id"
-					  method="post">
-					<button type="submit" class="btn btn-sm btn-danger">
-						Smazat
-					</button>
-				</form>
-			</td>
-			<td>@role.Id</td>
-		</tr>
-	}
-</table> 
+
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h3 fw-bold">Role</h1>
+        <p class="text-muted mb-0">Správa uživatelských rolí</p>
+    </div>
+
+    <div class="col text-end">
+        <a asp-action="Create" class="btn btn-success">+ Nová role</a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Název</th>
+                    <th class="text-muted">ID</th>
+                    <th class="text-end">Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model) {
+                    <tr>
+                        <td class="fw-semibold">@role.Name</td>
+                        <td class="text-muted small">@role.Id</td>
+
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-warning me-1" asp-action="Edit" asp-route-id="@role.Id">Upravit</a>
+                            <form asp-action="Delete" asp-route-id="@role.Id" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Smazat</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

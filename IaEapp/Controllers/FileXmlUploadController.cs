@@ -27,6 +27,9 @@ namespace IaEapp.Controllers {
             _context = context;
         }
 
+        public IActionResult Index() {
+            return View();
+        }
         public async Task<IActionResult> Upload() {
             var userId = _userManager.GetUserId(User);
             var tempTransactions = await _transactionTempService.GetAllAsync(userId);
@@ -66,7 +69,7 @@ namespace IaEapp.Controllers {
                     reader.ReadToFollowing("PART_ID1_1");
                     reader.Read();
                     transactionTemp.Description = reader.Value;
-                    transactionTemp.TransactionCategoryId = 3;
+                    transactionTemp.TransactionCategoryId = 1;
                     if (transactionTemp.Amount > 0)
                         transactionTemp.Income = true;
                     else 

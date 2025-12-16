@@ -1,70 +1,99 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - IaEapp</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/IaEapp.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="bg-light">
+
+    <!-- NAVBAR -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IaEapp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">💰 IaEapp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-						</li class="nav-item">
-                        @if (User.Identity.IsAuthenticated){
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index">Transakce</a>
-                        </li>
-                        }
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TransactionCategories" asp-action="Index">Kategorie transakcí</a>
-                            </li>
-                        }
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Uživatelé</a>
-                            </li>
-                        }
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Roles" asp-action="Index">Role</a>
-                            </li>
-                        }
+                <div class="collapse navbar-collapse" id="mainNavbar">
 
+                    <!-- LEFT MENU -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Přehled</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated) {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Transactions" asp-action="Index">Transakce</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated) {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="FileXmlUpload" asp-action="Index">Import transackcí</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin")) {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Administrace</a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="TransactionCategories" asp-action="Index"> Kategorie transakcí</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Users" asp-action="Index">Uživatelé</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Roles" asp-action="Index">Role</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+
+                    <!-- RIGHT MENU -->
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity.IsAuthenticated) {
+                            <li class="nav-item">
+                                <span class="nav-link text-secondary">👤 @User.Identity.Name</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-light btn-sm ms-2" asp-controller="Account" asp-action="Logout">Odhlásit</a>
+                            </li>
+                        } else {
+                            <li class="nav-item">
+                                <a class="btn btn-outline-light btn-sm" asp-controller="Account" asp-action="Login">Přihlásit</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - IaEapp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- MAIN CONTENT -->
+    <main class="container my-4">
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-top py-3 mt-auto bg-white">
+        <div class="container text-center text-muted small">
+            &copy; 2025 – IaEapp |
+            <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none">
+                Použití aplikace
+            </a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

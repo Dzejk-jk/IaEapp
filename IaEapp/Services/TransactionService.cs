@@ -21,7 +21,7 @@ namespace IaEapp.Services {
             }
             return transactionDTOs.OrderByDescending(t => t.Date);
         }
-        private static TransactionDTO modelToDTO(Transaction transaction) {
+        private TransactionDTO modelToDTO(Transaction transaction) {
             if (transaction != null) {
                 return new TransactionDTO {
                     Id = transaction.Id,
@@ -30,12 +30,18 @@ namespace IaEapp.Services {
                     Date = transaction.Date,
                     Income = transaction.Amount > 0,
                     TransactionCategoryId = transaction.TransactionCategoryId,
-                    TransactionCategoryName = transaction.TransactionCategory?.Name,
+                    TransactionCategoryName = GetCategoryNameAsync(transaction.TransactionCategoryId),
                     UserId = transaction.UserId,
                     UserName = transaction.User?.UserName
                 }; 
             }
             return null;
+        }
+        private string GetCategoryNameAsync(int id) {
+            var category = _dbContext.TransactionCategories.FirstOrDefault(c => c.Id == id);
+            if (category == null)
+                return "";
+            return category.Name;
         }
         internal async Task CreateTransactionAsync(TransactionDTO transactionDTO, string userId) {
             Transaction newTransaction = DtoToModel(transactionDTO);
@@ -78,10 +84,11 @@ namespace IaEapp.Services {
             return transactionToUpdate;
         }
 
-        internal async Task DeleteAsync(int id) {
+        internal async Task<TransactionDTO> DeleteAsync(int id) {
             var transactionToDelete = await _dbContext.Transactions.FindAsync(id);
             _dbContext.Transactions.Remove(transactionToDelete);
             await _dbContext.SaveChangesAsync();
+            return(modelToDTO(transactionToDelete));
         }
 
         internal IQueryable<TransactionDTO> TransactionFilters(string sortOrder, IQueryable<TransactionDTO> transactions) {

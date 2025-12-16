@@ -32,6 +32,7 @@ builder.Services.ConfigureApplicationCookie(options => {
     options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     options.SlidingExpiration = true;
+    options.AccessDeniedPath = "/Shared/AccessDenied";
 });
 
 var app = builder.Build();

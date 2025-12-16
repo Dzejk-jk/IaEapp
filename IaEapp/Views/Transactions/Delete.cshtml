@@ -1,16 +1,37 @@
 ﻿@using IaEapp.DTO
 @model TransactionDTO
 
-<h4>Opravdu chcete smazat tuto transakci? </h4>
-<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-	@Html.AntiForgeryToken()
-	<div class="form-group">
-		<label asp-for="@Model.Description"></label>
-		<input type="text" asp-for="@Model.Description" class="form-control" readonly />
-		<label asp-for="@Model.TransactionCategoryId"></label>
-		<input type="text" asp-for="@Model.TransactionCategoryId" class="form-control" readonly />
-		<label asp-for="@Model.Amount"></label>
-		<input type="number" asp-for="@Model.Amount" class="form-control" readonly />
-	</div>
-	<input type="submit" class="btn btn-danger" value="Delete" />
-</form>
+@{
+    ViewData["Title"] = "Smazat transakci";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white fw-semibold">Potvrzení smazání</div>
+            <div class="card-body">
+                <p class="text-danger fw-semibold">Opravdu chcete smazat tuto transakci?</p>
+                <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label class="form-label">Popis</label>
+                        <input class="form-control" value="@Model.Description" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kategorie</label>
+                        <input class="form-control" value="@Model.TransactionCategoryName" readonly />
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Částka</label>
+                        <input class="form-control @(Model.Income ? "text-success" : "text-danger")" value="@Model.Amount Kč"readonly />
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Zpět</a>
+                        <button type="submit" class="btn btn-danger">Smazat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

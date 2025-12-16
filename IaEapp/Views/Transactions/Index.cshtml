@@ -1,58 +1,53 @@
 ﻿@using IaEapp.DTO
 @model PaginatedList<TransactionDTO>
 
-<form method="post" enctype="multipart/form-data" asp-controller="FileXmlUpload"
-      asp-action="Upload">
-    @Html.AntiForgeryToken()
-    Nahrát z xml
-    <div>
-        <input type="file" name="file" />
-    </div>
-    <div>
-        <input type="submit" value="Upload" />
-    </div>
-</form>
+@{
+    ViewData["Title"] = "Transakce";
+}
 
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            <label>Hledat: <input type="text" name="q" value="@ViewData["CurrentFilter"]" /></label>
-            <input type="submit" value="Hledat" class="btn btn-default" /> |
-            <a asp-action="Index">Všechny transakce</a>
-        </p>
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h3 fw-bold">Transakce</h1>
+        <p class="text-muted mb-0">Přehled příjmů a výdajů</p>
     </div>
-</form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <p>Rychlé volby:</p>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["IncomeSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Příchozí platby</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["ExpanseSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Odchozí platby</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["LastMonth"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Minulý měsíc</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["ThisMonth"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Tento měsíc</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["Last30DaysSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Polsedních 30 dní</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["All"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Všechny transakce</a>
-            </th>
-        </tr>
-    </thead>
-</table>
+    <div class="col text-end">
+        <a class="btn btn-outline-secondary me-2" asp-controller="FileXmlUpload" asp-action="Index">Import z XML</a>
+        <a class="btn btn-success" asp-action="Create">+ Nová transakce</a>
+    </div>
+</div>
 
-<div class="container">
-        <table class="table table-bordered">
+<!-- FILTERS -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form asp-action="Index" method="get" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Hledat</label>
+                <input type="text" name="q" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Popis, kategorie..." />
+            </div>
+            <div class="col-md-8">
+                <label class="form-label d-block">Rychlé filtry</label>
+                <div class="btn-group flex-wrap">
+                    <a class="btn btn-outline-primary" asp-route-sortOrder="@ViewData["IncomeSort"]">Příjmy</a>
+                    <a class="btn btn-outline-primary" asp-route-sortOrder="@ViewData["ExpanseSort"]">Výdaje</a>
+                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["LastMonth"]">Minulý měsíc</a>
+                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["ThisMonth"]">Tento měsíc</a>
+                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["Last30DaysSort"]">30 dní</a>
+                    <a class="btn btn-outline-dark" asp-action="Index">Vše</a>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Hledat</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- TABLE -->
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
             <thead class="table-light">
                 <tr>
                     <th>Popis</th>
@@ -60,87 +55,60 @@
                     <th>Kategorie</th>
                     <th>Datum</th>
                     <th>Uživatel</th>
-                    <th>Upravit</th>
-                    <th>Odebrat</th>
+                    <th class="text-end">Akce</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model) {
                     <tr>
                         <td>@item.Description</td>
-                        @if (item.Income) {
-                        <td style="color:green">@item.Amount Kč</td>
-                        } else {
-                        <td style="color:red">@item.Amount Kč</td>
-                        }
+                        <td class="fw-semibold @(item.Income ? "text-success" : "text-danger")">@item.Amount Kč</td>
                         <td>@item.TransactionCategoryName</td>
                         <td>@item.Date.ToString("yyyy-MM-dd")</td>
                         <td>@item.UserName</td>
-                        <td><a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Upravit</a></td>
-                    <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Odebrat</a></td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Upravit</a>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Smazat</a>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
+
     </div>
-<hr />
-<div>
-    <a class="btn btn-success" asp-action="Create">Vytvořit</a>
-</div> 
+</div>
 
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        @* Previous button *@
-        <li class="page-item @prevDisabled">
-            <a class="page-link"
-               asp-action="Index"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@(Model.PageIndex - 1)"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-
-        @* Page numbers *@
-        @foreach (var pageNum in Model.PageNumbers) {
-            if (pageNum == -1) {
-                <li class="page-item disabled">
-                    <span class="page-link">...</span>
-                </li>
-            } else {
-                var active = pageNum == Model.PageIndex ? "active" : "";
-                <li class="page-item @active">
-                    <a class="page-link"
-                       asp-action="Index"
-                       asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@pageNum"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                        @pageNum
-                    </a>
-                </li>
+<!-- PAGINATION -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <small class="text-muted">
+        Stránka @Model.PageIndex z @Model.TotalPages
+        (@Model.TotalCount položek)
+    </small>
+    <nav>
+        <ul class="pagination mb-0">
+            <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                <a class="page-link" asp-route-pageNumber="@(Model.PageIndex - 1)">
+                    &laquo;
+                </a>
+            </li>
+            @foreach (var pageNum in Model.PageNumbers) {
+                if (pageNum == -1) {
+                    <li class="page-item disabled">
+                        <span class="page-link">…</span>
+                    </li>
+                } else {
+                    <li class="page-item @(pageNum == Model.PageIndex ? "active" : "")">
+                        <a class="page-link" asp-route-pageNumber="@pageNum">
+                            @pageNum
+                        </a>
+                    </li>
+                }
             }
-        }
-
-        @* Next button *@
-        <li class="page-item @nextDisabled">
-            <a class="page-link"
-               asp-action="Index"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@(Model.PageIndex + 1)"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
-
-<div class="mt-2">
-    <small>Stránka @Model.PageIndex z @Model.TotalPages (@Model.TotalCount položek)</small>
+            <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                <a class="page-link" asp-route-pageNumber="@(Model.PageIndex + 1)">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>

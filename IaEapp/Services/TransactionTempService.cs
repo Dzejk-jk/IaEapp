@@ -78,7 +78,6 @@ namespace IaEapp.Services {
             try {
                 await _transactionService.CreateTransactionAsync(newTransaction, userId);
             } catch (Exception ex) { Console.WriteLine($"Error during creating transaction: {ex}"); }
-
             var deleteTempTr = await _dbContext.TransactionsTemp.FindAsync(transactionTemp.Id);
             _dbContext.TransactionsTemp.Remove(deleteTempTr);
             await _dbContext.SaveChangesAsync();

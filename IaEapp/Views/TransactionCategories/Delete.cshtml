@@ -8,5 +8,11 @@
 		<label asp-for="Name"></label>
 		<input type="text" asp-for="Name" class="form-control" readonly />
 	</div>
-	<input class="btn btn-success" type="submit" value="Delete" />
+	@if (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin")) {
+		<input class="btn btn-success" type="submit" value="Delete" />
+	}
+	else
+	{
+		<input class="btn btn-success" type="submit" value="Delete" disabled/>
+	}
 </form>

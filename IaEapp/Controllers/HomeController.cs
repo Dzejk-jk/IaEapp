@@ -10,13 +10,11 @@ namespace IaEapp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly TransactionService _transactionService;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, TransactionService transactionService)
+        public HomeController(UserManager<AppUser> userManager, TransactionService transactionService)
         {
-            _logger = logger;
             _userManager = userManager;
             _transactionService = transactionService;
         }
@@ -40,16 +38,17 @@ namespace IaEapp.Controllers
             var data = _transactionService.GetChartDataThisMonth(userId);
             return Json(data);
         }
+        public IActionResult GetChartDataIncomeByMonth() {
+            string userId = _userManager.GetUserId(User);
+            var data = _transactionService.GetChartDataIncomeByMonth(userId);
+            return Json(data);
+        }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

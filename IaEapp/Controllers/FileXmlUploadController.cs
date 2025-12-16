@@ -27,6 +27,8 @@ namespace IaEapp.Controllers {
             _context = context;
         }
 
+        public IActionResult Index() => View();
+
         public async Task<IActionResult> Upload() {
             var userId = _userManager.GetUserId(User);
             var tempTransactions = await _transactionTempService.GetAllAsync(userId);

@@ -1,22 +1,10 @@
 ﻿@using IaEapp.DTO
 @model PaginatedList<TransactionDTO>
 
-<form method="post" enctype="multipart/form-data" asp-controller="FileXmlUpload"
-      asp-action="Upload">
-    @Html.AntiForgeryToken()
-    Nahrát z xml
-    <div>
-        <input type="file" name="file" />
-    </div>
-    <div>
-        <input type="submit" value="Upload" />
-    </div>
-</form>
-
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            <label>Hledat: <input type="text" name="q" value="@ViewData["CurrentFilter"]" /></label>
+            <label>Zadej: <input type="text" name="q" placeholder="Kategorie, částka, název..." value="@ViewData["CurrentFilter"]" /></label>
             <input type="submit" value="Hledat" class="btn btn-default" /> |
             <a asp-action="Index">Všechny transakce</a>
         </p>
@@ -84,7 +72,7 @@
         </table>
     </div>
 <hr />
-<div>
+<div class="mb-2">
     <a class="btn btn-success" asp-action="Create">Vytvořit</a>
 </div> 
 

@@ -118,7 +118,7 @@ namespace IaEapp.Services {
         }
         public PaginatedList<TransactionDTO> Pagination(int? pageNumber, IQueryable<TransactionDTO> transactionsQuery) {
             var filteredTransactions = transactionsQuery.ToList();
-            int pageSize = 20;
+            int pageSize = 15;
             int totalCount = filteredTransactions.Count;
             int skip = ((pageNumber ?? 1) - 1) * pageSize;
             var pagedTransactions = filteredTransactions
@@ -181,6 +181,24 @@ namespace IaEapp.Services {
                             Total = g.Sum(e => e.Amount)
                         });
             return data;
+        }
+
+        public IQueryable GetChartDataIncomeByMonth(string userId) {
+            var data = _dbContext.Transactions
+                        .Include(tr => tr.TransactionCategory)
+                        .Include(tr => tr.User)
+                        .Where(tr => tr.UserId == userId)
+                        .GroupBy(t => new { t.Date.Year, t.Date.Month })
+                        .Select(g => new {
+                            Year = g.Key.Year,
+                            Month = g.Key.Month,
+                            Income = g.Where(x => x.Income).Sum(x => x.Amount),
+                            Expense = g.Where(x => !x.Income).Sum(x => x.Amount)
+                        })
+
+                        ;
+            return data;
+
         }
     }
 }

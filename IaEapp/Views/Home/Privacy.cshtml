@@ -1,6 +1,116 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
+<h1>Úvod do aplikace</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<h3>Obsah</h3>
+<ol>
+    <li>Úvod</li>
+    <li>Přihlášení</li>
+    <li>Role</li>
+    <li>Automatický import transakcí</li>
+</ol>
+
+<h5>1) Úvod</h5>
+<p>
+    Aplikace je určena pro správu příjmů a výdajů. Uživatelé mohou libovolně přidávat transakce. Každá transakce je vázaná na daného uživatele. K jiným než svým transakcím by se uživatel neměl dostat.
+    Na úvodní stránce jsou 4 grafy s přehledy transakcí přihlášeného uživatele. 
+</p>
+
+<h5>2) Přihlášení</h5>
+<p>
+    Přihlašování je přes e-mail. Vytváření uživatelů je možné pouze s rolí Admina nebo SuperAdmina. 
+    Zadejte uživatelský email a heslo ze seznamu níže.
+</p>
+<p>
+    Uživatelský emaily a hesla:
+</p>
+<ul>
+    <li>Admin</li>
+    <ul>
+        <li>Email: admin@admin.cz</li>
+        <li>Heslo: Abcd1234</li>
+    </ul>
+    <li>Teacher</li>
+    <ul>
+        <li>Email: petr@petr.cz</li>
+        <li>Heslo: Abcd1234</li>
+    </ul>
+</ul>
+<p class="text-info">Z bezpečnostních důvodu nedávám přihlašovací údaje pro SuperAdmina.</p>
+
+<h5>3) Role</h5>
+<table>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+<p>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Název role</th>
+                <th>CRUD svoje transakce</th>
+                <th>Import transakcí</th>
+                <th>Kategorie - upravit</th>
+                <th>Kategorie - smazat</th>
+                <th>Uživatelé - vytvořit</th>
+                <th>Uživatelé - upravit</th>
+                <th>uživatelé - smazat </th>
+                <th>Role - upravit</th>
+                <th>Role - smazat</th>
+                <th>SuperAdmin - upravit</th>
+                <th>SuperAdmin - smazat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Uživatel</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class ="fw-bolder text-center">*</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Admin</td>
+                <td class ="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td></td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td></td>
+                <td class="fw-bolder text-center">*</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>SuperAdmin</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+                <td class="fw-bolder text-center">*</td>
+            </tr>
+        </tbody>
+    </table>
+
+<h5>4) Automatický import transakcí</h5>
+<p>
+    Funguje pouze pro import výpisu z bankovního účtu banky ČSOB. 
+    Přes tlačítko import přidáme soubor a vygenerují se transakce. Všechny transakce jsou automaticky přiřazeny do kategorie import, kterou jde poté upravit. 
+</p>

@@ -1,31 +1,52 @@
 ﻿@using IaEapp.Models
 @model IEnumerable<Transaction>;
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Přehled";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <h1 class="bg-info text-white">Index</h1>
-    @Model
-    @if (User?.Identity?.IsAuthenticated ?? false) {
-        <a asp-controller="Account" asp-action="Logout" class="btn btn-dark">Odhlásit</a>
-    }
+    <h1 class="display-4">Sleduj své příjmy a výdaje přehledně na jednom místě</h1>
 
 </div>
 
-<div>
-    <canvas style="max-width: 450px; max-height: 450px" id="chartAllTime"></canvas>
+<div class="card-body d-flex justify-content-center align-items-center">
+    <canvas id="chartIncomeByMonth" style="width: 600px; height: 200px"></canvas>
 </div>
 
-<div>
-    <canvas style="max-width: 450px; max-height: 450px" id="chartLastMonth"></canvas>
-</div>
+<div class="row g-4">
 
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header text-center fw-semibold">
+                Celkový přehled
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="chartAllTime" style="max-width: 100%; max-height: 300px"></canvas>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <canvas style="max-width: 450px; max-height: 450px" id="chartThisMonth"></canvas>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header text-center fw-semibold">
+                Minulý měsíc
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="chartLastMonth" style="max-width: 100%; max-height: 300px"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header text-center fw-semibold">
+                Tento měsíc
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="chartThisMonth" style="max-width: 100%; max-height: 300px"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,7 +54,50 @@
 <script>
     // Načtení všech grafů po načtení stránky
     document.addEventListener('DOMContentLoaded', function() {
-        // 1. Graf pro celkový přehled
+        // 1. Graf pro výdaje a příjmy za měsíce 
+        const ctxIncomeByMonth = document.getElementById('chartIncomeByMonth');
+        if (ctxIncomeByMonth) {
+            fetch('/Home/GetChartDataIncomeByMonth')
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(d => `${d.month}/${d.year}`);
+                const incomeData = data.map(d => d.income);
+                const expenseData = data.map(d => Math.abs(d.expense));
+
+                new Chart(ctxIncomeByMonth, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Příjmy',
+                                data: incomeData,
+                                backgroundColor: '#36A2EB'
+                            },
+                            {
+                                label: 'Výdaje',
+                                data: expenseData,
+                                backgroundColor: '#FF6384'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Přehled příjmů a výdajů po měsících'
+                            }
+                        },
+                    }
+                });
+            });
+        }
+
+        // 2. Graf pro celkový přehled
         const ctxAllTime = document.getElementById('chartAllTime');
         if (ctxAllTime) {
             fetch('/Home/GetChart')
@@ -67,7 +131,7 @@
                 });
         }
 
-        // 2. Graf za minulý měsíc
+        // 3. Graf za minulý měsíc
         const ctxLastMonth = document.getElementById('chartLastMonth');
         if (ctxLastMonth) {
             fetch('/Home/GetChartLastMonth')
@@ -101,7 +165,7 @@
                 });
         }
 
-        // 3. Graf za tento měsíc
+        // 4. Graf za tento měsíc
         const ctxThisMonth = document.getElementById('chartThisMonth');
         if (ctxThisMonth) {
             fetch('/Home/GetChartThisMonth')

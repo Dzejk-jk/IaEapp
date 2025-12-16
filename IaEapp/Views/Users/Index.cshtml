@@ -9,8 +9,8 @@
 		<th>Name</th>
 		<th>Email</th>
 		<th>ID</th>
-		<th>Update</th>
-		<th>Delete</th>
+		<th>Upravit</th>
+		<th>Smazat</th>
 	</tr>
 	@foreach (AppUser user in Model) {
 	<tr>
@@ -20,6 +20,7 @@
 		<td>
 			<a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id"> Upravit</a>
 		</td>
+	@if (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin")) {
 		<td>
 			<form asp-action="Delete" asp-route-id="@user.Id" method="post">
 					@Html.AntiForgeryToken()
@@ -27,7 +28,14 @@
 					Odstranit
 				</button>
 			</form>
-		</td>
-	</tr>
+				</td>
+			} else
+			{ <td>
+				<button type="submit" class="btn btn-sm btn-danger" disabled>
+					Odstranit
+				</button>
+			</td>
+			}
+		</tr>
 	}
 </table> 

@@ -1,0 +1,19 @@
+﻿﻿@{
+ViewData["Title"] = "Import z XML";
+}
+
+<div class="fw-semibold">
+    <h1 >Import transakcí</h1>
+    <h5 class="text-info">Funguje pouze pro ČSOB výpis z banky ve formátu xml.</h5>
+</div>
+
+<form method="post" enctype="multipart/form-data" asp-controller="FileXmlUpload" asp-action="Upload">
+    @Html.AntiForgeryToken()
+    Nahrát z xml
+    <div>
+        <input type="file" name="file" />
+    </div>
+    <div>
+        <input type="submit" value="Upload" />
+    </div>
+</form>

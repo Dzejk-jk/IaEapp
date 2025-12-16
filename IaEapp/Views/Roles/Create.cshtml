@@ -1,11 +1,11 @@
 ﻿@model string
 <h1>Vytvořit roli</h1>
-<a asp-action="Index" class="btn btn-secondary">Back</a>
+<a asp-action="Index" class="btn btn-secondary">Zpět</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 <form asp-action="Create" method="post">
 	<div>
 		<label for="name">Název:</label>
 		<input name="name" class="form-control" />
 	</div>
-	<button type="submit" class="btn btn-primary">Create</button>
+	<button type="submit" class="btn btn-primary">Vytvořit</button>
 </form>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IaEapp.Controllers {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, SuperAdmin")]
     public class RolesController : Controller {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;

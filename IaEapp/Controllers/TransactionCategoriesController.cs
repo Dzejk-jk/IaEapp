@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IaEapp.Controllers {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, SuperAdmin")]
     public class TransactionCategoriesController : Controller {
         private readonly TransactionCategoryService _transactionCategoryService;
         public TransactionCategoriesController(TransactionCategoryService transactionCategoryService) {

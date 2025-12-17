@@ -69,7 +69,7 @@ namespace IaEapp.Controllers {
                     reader.ReadToFollowing("PART_ID1_1");
                     reader.Read();
                     transactionTemp.Description = reader.Value;
-                    transactionTemp.TransactionCategoryId = 1;
+                    transactionTemp.TransactionCategoryId = 8; //Import - nesmí se smazat
                     if (transactionTemp.Amount > 0)
                         transactionTemp.Income = true;
                     else 

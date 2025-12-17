@@ -22,17 +22,17 @@
     <div class="card-body">
         <form asp-action="Index" method="get" class="row g-3 align-items-end">
             <div class="col-md-4">
-                <label class="form-label">Hledat</label>
+                <label class="form-label">Zadej:</label>
                 <input type="text" name="q" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Popis, kategorie..." />
             </div>
             <div class="col-md-8">
                 <label class="form-label d-block">Rychlé filtry</label>
                 <div class="btn-group flex-wrap">
-                    <a class="btn btn-outline-primary" asp-route-sortOrder="@ViewData["IncomeSort"]">Příjmy</a>
-                    <a class="btn btn-outline-primary" asp-route-sortOrder="@ViewData["ExpanseSort"]">Výdaje</a>
-                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["LastMonth"]">Minulý měsíc</a>
-                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["ThisMonth"]">Tento měsíc</a>
-                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["Last30DaysSort"]">30 dní</a>
+                    <a class="btn btn-outline-primary" asp-route-sortOrder="@ViewData["IncomeSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Příjmy</a>
+                    <a class="btn btn-outline-primary" asp-route-sortOrder="@ViewData["ExpanseSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Výdaje</a>
+                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["LastMonth"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Minulý měsíc</a>
+                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["ThisMonth"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Tento měsíc</a>
+                    <a class="btn btn-outline-secondary" asp-route-sortOrder="@ViewData["Last30DaysSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">30 dní</a>
                     <a class="btn btn-outline-dark" asp-action="Index">Vše</a>
                 </div>
             </div>
@@ -50,10 +50,10 @@
         <table class="table table-hover mb-0">
             <thead class="table-light">
                 <tr>
+                    <th>Datum</th>
                     <th>Popis</th>
                     <th>Částka</th>
                     <th>Kategorie</th>
-                    <th>Datum</th>
                     <th>Uživatel</th>
                     <th class="text-end">Akce</th>
                 </tr>
@@ -61,10 +61,10 @@
             <tbody>
                 @foreach (var item in Model) {
                     <tr>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
                         <td>@item.Description</td>
                         <td class="fw-semibold @(item.Income ? "text-success" : "text-danger")">@item.Amount Kč</td>
                         <td>@item.TransactionCategoryName</td>
-                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
                         <td>@item.UserName</td>
                         <td class="text-end">
                             <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Upravit</a>
@@ -87,7 +87,7 @@
     <nav>
         <ul class="pagination mb-0">
             <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
-                <a class="page-link" asp-route-pageNumber="@(Model.PageIndex - 1)">
+                <a class="page-link" asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                     &laquo;
                 </a>
             </li>
@@ -98,14 +98,14 @@
                     </li>
                 } else {
                     <li class="page-item @(pageNum == Model.PageIndex ? "active" : "")">
-                        <a class="page-link" asp-route-pageNumber="@pageNum">
+                        <a class="page-link" asp-route-pageNumber="@pageNum" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                             @pageNum
                         </a>
                     </li>
                 }
             }
             <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
-                <a class="page-link" asp-route-pageNumber="@(Model.PageIndex + 1)">
+                <a class="page-link" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                     &raquo;
                 </a>
             </li>

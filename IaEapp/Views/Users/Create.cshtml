@@ -13,17 +13,17 @@
                     @Html.AntiForgeryToken()
                     <div asp-validation-summary="All" class="alert alert-danger d-none"></div>
                     <div class="mb-3">
-                        <label asp-for="UserName" class="form-label"></label>
+                        <label asp-for="UserName" class="form-label">Jméno</label>
                         <input asp-for="UserName" class="form-control" />
                         <span asp-validation-for="UserName" class="text-danger small"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Email" class="form-label"></label>
+                        <label asp-for="Email" class="form-label">E-mail</label>
                         <input asp-for="Email" type="email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>
                     <div class="mb-4">
-                        <label asp-for="Password" class="form-label"></label>
+                        <label asp-for="Password" class="form-label">Heslo</label>
                         <input asp-for="Password" type="password" class="form-control" />
                         <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>

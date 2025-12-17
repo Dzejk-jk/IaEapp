@@ -26,6 +26,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Přehled</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
                         @if (User.Identity.IsAuthenticated) {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Transactions" asp-action="Index">Transakce</a>
@@ -36,7 +39,7 @@
                                 <a class="nav-link" asp-controller="FileXmlUpload" asp-action="Index">Import transackcí</a>
                             </li>
                         }
-                        @if (User.IsInRole("Admin")) {
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin")) || (User.IsInRole("SuperAdmin"))) {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Administrace</a>
 
@@ -83,7 +86,7 @@
     <!-- FOOTER -->
     <footer class="border-top py-3 mt-auto bg-white">
         <div class="container text-center text-muted small">
-            &copy; 2025 – IaEapp |
+            &copy; 2025 – IaEapp | Jakub Kuda -
             <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none">
                 Použití aplikace
             </a>

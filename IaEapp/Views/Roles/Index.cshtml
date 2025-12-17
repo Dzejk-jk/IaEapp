@@ -28,18 +28,34 @@
             </thead>
             <tbody>
                 @foreach (var role in Model) {
+                    @if (role.Id == "94f6c59f-9902-48df-958d-f90c24799add" && !User.IsInRole("SuperAdmin")) {
                     <tr>
                         <td class="fw-semibold">@role.Name</td>
-                        <td class="text-muted small">@role.Id</td>
+                        <td class="text-muted small">xxxxxxxxxxx</td>
 
                         <td class="text-end">
-                            <a class="btn btn-sm btn-outline-warning me-1" asp-action="Edit" asp-route-id="@role.Id">Upravit</a>
-                            <form asp-action="Delete" asp-route-id="@role.Id" method="post" class="d-inline">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Smazat</button>
+                            <button class="btn btn-sm btn-outline-warning me-1" disabled>Upravit</button>
+                            <form class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" disabled>Odstranit</button>
                             </form>
                         </td>
                     </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="fw-semibold">@role.Name</td>
+                            <td class="text-muted small">@role.Id</td>
+
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-warning me-1" asp-action="Edit" asp-route-id="@role.Id">Upravit</a>
+                                <form asp-action="Delete" asp-route-id="@role.Id" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Odstranit</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

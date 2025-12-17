@@ -16,15 +16,10 @@ namespace IaEapp.Controllers {
     [Authorize]
     public class FileXmlUploadController : Controller {
         private readonly TransactionTempService _transactionTempService;
-        private readonly TransactionService _transactionService;
         private readonly UserManager<AppUser> _userManager;
-        private readonly ApplicationDbContext _context;
-        public FileXmlUploadController(TransactionTempService transactionTempService, UserManager<AppUser> userManager, TransactionService transactionService,
-            ApplicationDbContext context) {
+        public FileXmlUploadController(TransactionTempService transactionTempService, UserManager<AppUser> userManager) {
             _transactionTempService = transactionTempService;
             _userManager = userManager;
-            _transactionService = transactionService;
-            _context = context;
         }
 
         public IActionResult Index() => View();

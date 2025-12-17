@@ -4,20 +4,23 @@
 }
 <h1>Vytvoření uživatele</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
-<div asp-validation-summary="All" class="text-danger"></div>
 <form method="post">
 	@Html.AntiForgeryToken()
 	<div>
 		<label asp-for="UserName">Jméno</label>
 		<input asp-for="UserName" class="form-control" />
+		<span asp-validation-for="UserName" class="invalid-feedback d-block"></span>
+
 	</div>
 	<div>
 		<label asp-for="Email">E-mail</label>
 		<input asp-for="Email" class="form-control" />
+		<span asp-validation-for="Email" class="invalid-feedback d-block"></span>
 	</div>
 	<div>
 		<label asp-for="Password">Heslo</label>
 		<input asp-for="Password" class="form-control" type="password"/>
+		<span asp-validation-for="Password" class="invalid-feedback d-block"></span>
 	</div>
 	<button type="submit" class="btn btn-primary">Vytvořit</button>
 </form>

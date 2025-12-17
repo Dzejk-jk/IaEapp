@@ -8,16 +8,16 @@
 <form method="post">
 	@Html.AntiForgeryToken()
 	<div>
-		<label asp-for="UserName"></label>
+		<label asp-for="UserName">Jméno</label>
 		<input asp-for="UserName" class="form-control" />
 	</div>
 	<div>
-		<label asp-for="Email"></label>
+		<label asp-for="Email">E-mail</label>
 		<input asp-for="Email" class="form-control" />
 	</div>
 	<div>
-		<label asp-for="Password"></label>
-		<input asp-for="Password" class="form-control" />
+		<label asp-for="Password">Heslo</label>
+		<input asp-for="Password" class="form-control" type="password"/>
 	</div>
-	<button type="submit" class="btn btn-primary">Create</button>
+	<button type="submit" class="btn btn-primary">Vytvořit</button>
 </form>

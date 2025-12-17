@@ -28,15 +28,18 @@ namespace IaEapp.Controllers {
             ViewData["All"] = "";
             ViewData["ThisMonth"] = "thisMonth";
             ViewData["LastMonth"] = "lastMonth";
-            ViewData["CurrentFilter"] = q;
 
             if (q != null)
                 pageNumber = 1;
             else
                 q = currentFilter;
 
+            ViewData["CurrentFilter"] = q;
+
             if (!string.IsNullOrEmpty(q)) {
-                transactionsQuery = transactionsQuery.Where(t => t.Description.Contains(q));
+                transactionsQuery = transactionsQuery.Where(t => t.Description.ToUpper().Contains(q.ToUpper()) ||
+                                                            t.TransactionCategoryName.ToUpper().Contains(q.ToUpper()) ||
+                                                            t.Amount.ToString().Contains(q));
             }
 
             transactionsQuery = _transactionService.TransactionFilters(sortOrder, transactionsQuery);

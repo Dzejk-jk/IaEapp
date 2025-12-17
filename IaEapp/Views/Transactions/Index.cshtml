@@ -43,10 +43,10 @@
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
+                    <th>Datum</th>
                     <th>Popis</th>
                     <th>Částka</th>
                     <th>Kategorie</th>
-                    <th>Datum</th>
                     <th>Uživatel</th>
                     <th>Upravit</th>
                     <th>Odebrat</th>
@@ -55,6 +55,7 @@
             <tbody>
                 @foreach (var item in Model) {
                     <tr>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
                         <td>@item.Description</td>
                         @if (item.Income) {
                         <td style="color:green">@item.Amount Kč</td>
@@ -62,7 +63,6 @@
                         <td style="color:red">@item.Amount Kč</td>
                         }
                         <td>@item.TransactionCategoryName</td>
-                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
                         <td>@item.UserName</td>
                         <td><a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Upravit</a></td>
                     <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Odebrat</a></td>
@@ -88,8 +88,8 @@
             <a class="page-link"
                asp-action="Index"
                asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@(Model.PageIndex - 1)"
                asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
                aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
@@ -106,9 +106,9 @@
                 <li class="page-item @active">
                     <a class="page-link"
                        asp-action="Index"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
                        asp-route-sortOrder="@ViewData["CurrentSort"]"
-                       asp-route-pageNumber="@pageNum"
-                       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                       asp-route-pageNumber="@pageNum">
                         @pageNum
                     </a>
                 </li>
@@ -120,8 +120,8 @@
             <a class="page-link"
                asp-action="Index"
                asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@(Model.PageIndex + 1)"
                asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
                aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>

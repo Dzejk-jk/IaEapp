@@ -1,16 +1,12 @@
 ﻿using IaEapp.DTO;
 using IaEapp.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IaEapp.Services {
     public class TransactionService {
         private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<AppUser> _userManager;
-        public TransactionService(ApplicationDbContext dbContext, UserManager<AppUser> userManager) {
+        public TransactionService(ApplicationDbContext dbContext) {
             _dbContext = dbContext;
-            _userManager = userManager;
         }
 
         public async Task<IEnumerable<TransactionDTO>> GetAllAsync(string userId) {

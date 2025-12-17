@@ -12,23 +12,22 @@
             <div class="card-body">
                 <form asp-action="Create" method="post">
                     @Html.AntiForgeryToken()
-                    <div asp-validation-summary="All" class="alert alert-danger d-none" id="validationSummary"></div>
                     <div class="mb-3">
                         <label asp-for="Description" class="form-label"></label>
                         <input asp-for="Description" class="form-control" placeholder="Např. Nájem, Výplata…" />
-                        <span asp-validation-for="Description" class="text-danger small"></span>
+                        <span asp-validation-for="Description" class="invalid-feedback d-block"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Amount" class="form-label"></label>
                         <input asp-for="Amount" type="number" step="0.01" class="form-control" placeholder="Částka v Kč" />
-                        <span asp-validation-for="Amount" class="text-danger small"></span>
+                        <span asp-validation-for="Amount" class="invalid-feedback d-block"></span>
                     </div>
                     <div class="mb-4">
                         <label asp-for="TransactionCategoryId" class="form-label"></label>
                         <select asp-for="TransactionCategoryId" class="form-select" asp-items="@(ViewData["Categories"] as SelectList)">
                             <option value="">-- vyber kategorii --</option>
                         </select>
-                        <span asp-validation-for="TransactionCategoryId" class="text-danger small"></span>
+                        <span asp-validation-for="TransactionCategoryId" class="invalid-feedback d-block"></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <a asp-action="Index" class="btn btn-outline-secondary">Zpět</a>

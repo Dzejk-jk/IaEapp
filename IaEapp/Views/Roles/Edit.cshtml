@@ -6,6 +6,11 @@
 
 <div class="row justify-content-center">
     <div class="col-lg-8">
+        @if (!ViewData.ModelState.IsValid) {
+            <div class="alert alert-danger">
+                <div asp-validation-summary="All"></div>
+            </div>
+        }
         <div class="card shadow-sm">
             <div class="card-header fw-semibold">Editace role: @Model.Role.Name</div>
             <div class="card-body">
@@ -14,7 +19,6 @@
                     <input type="hidden" name="roleName" value="@Model.Role.Name" />
                     <input type="hidden" name="roleId" value="@Model.Role.Id" />
                     <div asp-validation-summary="All" class="alert alert-danger d-none"></div>
-
                     <!-- ADD USERS -->
                     <div class="mb-4">
                         <h5 class="mb-2">Přidat uživatele</h5>
@@ -86,3 +90,7 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

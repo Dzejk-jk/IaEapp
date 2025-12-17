@@ -6,11 +6,13 @@ namespace IaEapp.DTO {
     public class TransactionDTO {
         public int Id { get; set; }
         [DisplayName("Popis"), StringLength(128)]
+        [Required]
         public string Description { get; set; } = string.Empty;
         [DisplayName("Částka"), DataType(DataType.Currency), Column(TypeName = "decimal(18, 2")]
         public decimal Amount { get; set; }
         [DisplayName("Datum")]
         public bool Income { get; set; } = false;
+        [Required]
         public DateTime Date { get; set; } = DateTime.Now;
         [DisplayName("Kategorie")]
         public int TransactionCategoryId { get; set; }

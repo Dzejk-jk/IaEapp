@@ -7,11 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace IaEapp.Services {
     public class TransactionTempService {
         private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<AppUser> _userManager;
         private readonly TransactionService _transactionService;
-        public TransactionTempService(ApplicationDbContext dbContext, UserManager<AppUser> userManager, TransactionService transactionService) {
+        public TransactionTempService(ApplicationDbContext dbContext, TransactionService transactionService) {
             _dbContext = dbContext;
-            _userManager = userManager;
             _transactionService = transactionService;
         }
         public async Task<IEnumerable<TransactionTemp>> GetAllAsync(string userId) {

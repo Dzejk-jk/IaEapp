@@ -4,8 +4,14 @@
     ViewData["Title"] = "Vytvořit roli";
 }
 
+
 <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
+        @if (!ViewData.ModelState.IsValid) {
+            <div class="alert alert-danger">
+                <div asp-validation-summary="All"></div>
+            </div>
+        }
         <div class="card shadow-sm">
             <div class="card-header fw-semibold">Vytvoření role</div>
             <div class="card-body">
@@ -25,3 +31,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

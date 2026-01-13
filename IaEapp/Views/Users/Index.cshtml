@@ -1,41 +1,54 @@
 ﻿@model IEnumerable<AppUser>
+
 @{
-	ViewData["Title"] = "Uživatelé";
+    ViewData["Title"] = "Uživatelé";
 }
-<h1>Všichni uživatelé</h1>
-<a asp-action="Create" class="btn btn-secondary">Vytvořit uživatele</a>
-<table class="table table-sm table-bordered">
-	<tr>
-		<th>Name</th>
-		<th>Email</th>
-		<th>ID</th>
-		<th>Upravit</th>
-		<th>Smazat</th>
-	</tr>
-	@foreach (AppUser user in Model) {
-	<tr>
-		<td>@user.UserName</td>
-		<td>@user.Email</td>
-		<td>@user.Id</td>
-		<td>
-			<a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id"> Upravit</a>
-		</td>
-	@if (User.Identity.IsAuthenticated && User.IsInRole("SuperAdmin")) {
-		<td>
-			<form asp-action="Delete" asp-route-id="@user.Id" method="post">
-					@Html.AntiForgeryToken()
-				<button type="submit" class="btn btn-sm btn-danger">
-					Odstranit
-				</button>
-			</form>
-				</td>
-			} else
-			{ <td>
-				<button type="submit" class="btn btn-sm btn-danger" disabled>
-					Odstranit
-				</button>
-			</td>
-			}
-		</tr>
-	}
-</table> 
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="h3 fw-bold">Uživatelé</h1>
+        <p class="text-muted mb-0">Správa uživatelských účtů</p>
+    </div>
+    <div class="col text-end">
+        <a asp-action="Create"class="btn btn-success">+ Nový uživatel</a>
+    </div>
+</div>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Uživatelské jméno</th>
+                    <th>Email</th>
+                    <th class="text-muted">ID</th>
+                    <th class="text-end">Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model) {
+                    <tr>
+                        <td class="fw-semibold">@user.UserName</td>
+                        <td>@user.Email</td>
+                        @if (user.Id == "3631b3ee-b07b-4e67-9682-5957109a6352" && !User.IsInRole("SuperAdmin")) {
+                        <td class="text-muted small">xxxxxxxxx</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-warning me-1" disabled>Upravit</button>
+                            <button type="submit" class="btn btn-sm btn-outline-danger" disabled>Odstranit</button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-muted small">@user.Id</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-warning me-1" asp-action="Edit" asp-route-id="@user.Id">Upravit</a>
+                                <form asp-action="Delete" asp-route-id="@user.Id" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Odstranit</button>
+                                </form>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

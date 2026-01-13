@@ -21,9 +21,7 @@ namespace IaEapp.Controllers {
             _transactionTempService = transactionTempService;
             _userManager = userManager;
         }
-
         public IActionResult Index() => View();
-
         public async Task<IActionResult> Upload() {
             var userId = _userManager.GetUserId(User);
             var tempTransactions = await _transactionTempService.GetAllAsync(userId);
@@ -48,28 +46,33 @@ namespace IaEapp.Controllers {
                     var transactionTemp = new TransactionTemp();
                     var userId = _userManager.GetUserId(User);
 
-                    reader.ReadToFollowing("S61_DATUM");
-                    reader.Read();
-                    string dateString = reader.Value;
-                    transactionTemp.Date = DateTime.ParseExact(dateString, "d.M.yyyy", CultureInfo.InvariantCulture);
-
-                    reader.ReadToFollowing("S61_CASTKA");
-                    reader.Read();
-                    string amount = reader.Value;
                     try {
-                        transactionTemp.Amount = decimal.Parse(amount);
-                    } catch { Exception e; }
+                        if (reader.ReadToFollowing("S61_DATUM")) {
+                            reader.Read();
+                            string dateString = reader.Value;
+                            transactionTemp.Date = DateTime.ParseExact(dateString, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+                        }
 
-                    reader.ReadToFollowing("PART_ID1_1");
-                    reader.Read();
-                    transactionTemp.Description = reader.Value;
-                    transactionTemp.TransactionCategoryId = 3;
-                    if (transactionTemp.Amount > 0)
-                        transactionTemp.Income = true;
-                    else 
-                        transactionTemp.Income = false;
-                    transactionTemp.UserId = userId;
-                    await _transactionTempService.CreateTrancastionAsync(transactionTemp);
+                        if (reader.ReadToFollowing("S61_CASTKA")) {
+                            reader.Read();
+                            string amount = reader.Value;
+                            amount = amount.Replace(",", ".").Replace(" ", "");
+                            transactionTemp.Amount = decimal.Parse(amount, CultureInfo.InvariantCulture);
+                        }
+
+                        if (reader.ReadToFollowing("PART_ID1_1")) {
+                            reader.Read();
+                            transactionTemp.Description = reader.Value;
+                        }
+
+                        transactionTemp.TransactionCategoryId = 8; // nemazat - Import kategorie
+                        transactionTemp.Income = transactionTemp.Amount > 0;
+                        transactionTemp.UserId = userId;
+
+                        await _transactionTempService.CreateTrancastionAsync(transactionTemp);
+                    } catch (Exception e) {
+                        Console.WriteLine($"Chyba při zpracování transakce: {e.Message}");
+                    }
                 }
             }
             System.IO.File.Delete(tempFilePath);

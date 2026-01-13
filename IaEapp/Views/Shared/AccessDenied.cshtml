@@ -1,2 +1,31 @@
-﻿<h2 class="bg-danger mb-1 p-2 text-white">Access Denied</h2>
-<a asp-controller="Account" asp-action="Logout" class="btn btn-primary">Odhlásit se</a>
+﻿@{
+    ViewData["Title"] = "Přístup odepřen";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm text-center">
+            <div class="card-body p-5">
+                <div class="mb-4">
+                    <span class="display-1 text-danger fw-bold">403</span>
+                </div>
+                <h3 class="fw-bold mb-2">Přístup odepřen</h3>
+                <p class="text-muted mb-4">
+                    Nemáš oprávnění zobrazit tuto stránku.
+                    Pokud si myslíš, že je to chyba, kontaktuj administrátora.
+                </p>
+                <div class="d-flex justify-content-center gap-2">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Domů</a>
+                    @if (User.Identity.IsAuthenticated) {
+                        <a asp-controller="Account" asp-action="Logout" class="btn btn-primary">Odhlásit se</a>
+                    } else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Přihlásit se</a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,116 +1,153 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Úvod do aplikace";
 }
-<h1>Úvod do aplikace</h1>
+<div class="container mt-4">
 
-<h3>Obsah</h3>
-<ol>
-    <li>Úvod</li>
-    <li>Přihlášení</li>
-    <li>Role</li>
-    <li>Automatický import transakcí</li>
-</ol>
+    <!-- Header -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h1 class="card-title mb-3">📘 Úvod do aplikace</h1>
+            <p class="text-muted mb-0">
+                Základní přehled funkcí aplikace, rolí a způsobu práce.
+            </p>
+        </div>
+    </div>
 
-<h5>1) Úvod</h5>
-<p>
-    Aplikace je určena pro správu příjmů a výdajů. Uživatelé mohou libovolně přidávat transakce. Každá transakce je vázaná na daného uživatele. K jiným než svým transakcím by se uživatel neměl dostat.
-    Na úvodní stránce jsou 4 grafy s přehledy transakcí přihlášeného uživatele. 
-</p>
+    <!-- Obsah -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">Obsah</h4>
+            <ol class="mb-0">
+                <li>Úvod</li>
+                <li>Přihlášení</li>
+                <li>Role</li>
+                <li>Automatický import transakcí</li>
+            </ol>
+        </div>
+    </div>
 
-<h5>2) Přihlášení</h5>
-<p>
-    Přihlašování je přes e-mail. Vytváření uživatelů je možné pouze s rolí Admina nebo SuperAdmina. 
-    Zadejte uživatelský email a heslo ze seznamu níže.
-</p>
-<p>
-    Uživatelský emaily a hesla:
-</p>
-<ul>
-    <li>Admin</li>
-    <ul>
-        <li>Email: admin@admin.cz</li>
-        <li>Heslo: Abcd1234</li>
-    </ul>
-    <li>Uživatel</li>
-    <ul>
-        <li>Email: petr@petr.cz</li>
-        <li>Heslo: Abcd1234</li>
-    </ul>
-</ul>
-<p class="text-info">Z bezpečnostních důvodu nedávám přihlašovací údaje pro SuperAdmina.</p>
+    <!-- 1. Úvod -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">1️⃣ Úvod</h4>
+            <p>
+                Aplikace slouží ke správě <strong>příjmů a výdajů</strong>.
+                Každý uživatel pracuje pouze se svými vlastními transakcemi.
+            </p>
+            <p>
+                Na úvodní stránce se zobrazují <strong>4 grafy</strong>
+                s přehledem transakcí přihlášeného uživatele.
+            </p>
+        </div>
+    </div>
 
-<h5>3) Role</h5>
-<table>
-    <tr>
-        <td></td>
-    </tr>
-</table>
-<p>
-    <table class="table table-bordered">
-        <thead class="table-light">
-            <tr>
-                <th>Název role</th>
-                <th>CRUD svoje transakce</th>
-                <th>Import transakcí</th>
-                <th>Kategorie - upravit</th>
-                <th>Kategorie - smazat</th>
-                <th>Uživatelé - vytvořit</th>
-                <th>Uživatelé - upravit</th>
-                <th>uživatelé - smazat </th>
-                <th>Role - upravit</th>
-                <th>Role - smazat</th>
-                <th>SuperAdmin - upravit</th>
-                <th>SuperAdmin - smazat</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Uživatel</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class ="fw-bolder text-center">*</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Admin</td>
-                <td class ="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td></td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td></td>
-                <td class="fw-bolder text-center">*</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>SuperAdmin</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-                <td class="fw-bolder text-center">*</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- 2. Přihlášení -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">2️⃣ Přihlášení</h4>
+            <p>
+                Přihlašování probíhá pomocí <strong>e-mailu a hesla</strong>.
+                Vytváření uživatelů je možné pouze pro role
+                <span class="badge bg-primary">Admin</span>
+                a
+                <span class="badge bg-danger">SuperAdmin</span>.
+            </p>
 
-<h5>4) Automatický import transakcí</h5>
-<p>
-    Funguje pouze pro import výpisu z bankovního účtu banky ČSOB. 
-    Přes tlačítko import přidáme soubor a vygenerují se transakce. Všechny transakce jsou automaticky přiřazeny do kategorie import, kterou jde poté upravit. 
-</p>
+            <h6 class="mt-4">Testovací účty</h6>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="border rounded p-3 mb-3">
+                        <h6 class="fw-bold">Admin</h6>
+                        <div>Email: <code>admin@admin.cz</code></div>
+                        <div>Heslo: <code>Abcd1234</code></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded p-3 mb-3">
+                        <h6 class="fw-bold">Uživatel</h6>
+                        <div>Email: <code>petr@petr.cz</code></div>
+                        <div>Heslo: <code>Abcd1234</code></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info mb-0">
+                Z bezpečnostních důvodů nejsou zveřejněny přihlašovací údaje
+                pro <strong>SuperAdmin</strong>.
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Role -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">3️⃣ Role</h4>
+
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Role</th>
+                            <th>CRUD transakcí</th>
+                            <th>Import</th>
+                            <th>Kategorie (edit)</th>
+                            <th>Kategorie (delete)</th>
+                            <th>Uživatelé (create)</th>
+                            <th>Uživatelé (edit)</th>
+                            <th>Uživatelé (delete)</th>
+                            <th>Role (edit)</th>
+                            <th>Role (delete)</th>
+                            <th>SuperAdmin (edit)</th>
+                            <th>SuperAdmin (delete)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Uživatel</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td colspan="10"></td>
+                        </tr>
+                        <tr>
+                            <td>Admin</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td></td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td></td>
+                            <td>✔</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="table-success">
+                            <td>SuperAdmin</td>
+                            <td colspan="11">✔ (plná práva)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Import -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h4 class="mb-3">4️⃣ Automatický import transakcí</h4>
+            <p>
+                Import transakcí je aktuálně podporován pouze pro
+                <strong>výpisy z banky ČSOB ve formátu .xml</strong>.
+            </p>
+            <p>
+                Po nahrání souboru se transakce automaticky vytvoří
+                a přiřadí do kategorie <strong>Import</strong>,
+                kterou lze později upravit.
+            </p>
+        </div>
+    </div>
+
+</div>

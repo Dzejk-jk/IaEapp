@@ -1,22 +1,40 @@
 ﻿@model LoginViewModel
 @{
-	ViewData["Title"] = "Login";
+    ViewData["Title"] = "Přihlášení";
 }
-<h1>Login</h1>
-<form asp-action="Login" method="post">
-	<input type="hidden" asp-for="ReturnUrl" />
-	<div>
-		<label asp-for="Email">E-mail</label>
-		<input asp-for="Email" class="form-control" />
-		<span asp-validation-for="Email" class="invalid-feedback d-block"></span>
-	</div>
-	<div>
-		<label asp-for="Password">Heslo</label>
-		<input asp-for="Password" class="form-control" type="password" />
-		<span asp-validation-for="Password" class="invalid-feedback d-block"></span>
-	</div>
-	<div>
-		Zapamatovat si? <input type="checkbox" asp-for="Remember" />
-	</div>
-	<button class="btn btn-primary" type="submit">Přihlásit</button>
-</form> 
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="text-center fw-bold mb-4">Přihlášení</h3>
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                <form asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="ReturnUrl" />
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" placeholder="email@seznam.cz" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input asp-for="Remember" class="form-check-input" />
+                        <label asp-for="Remember" class="form-check-label">Zapamatovat si mě?</label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Přihlásit se</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

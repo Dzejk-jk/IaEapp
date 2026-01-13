@@ -1,19 +1,26 @@
-﻿﻿@{
-ViewData["Title"] = "Import z XML";
+﻿@{
+    ViewData["Title"] = "Import z XML";
 }
 
-<div class="fw-semibold">
-    <h1 >Import transakcí</h1>
-    <h5 class="text-info">Funguje pouze pro ČSOB výpis z banky ve formátu xml.</h5>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header fw-semibold">
+                Import transakcí z XML
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" asp-action="Upload">
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label class="form-label">Vyber XML soubor</label>
+                        <input type="file" name="file" class="form-control" accept=".xml" required />
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-controller="Transactions" asp-action="Index" class="btn btn-outline-secondary">Zpět</a>
+                        <button type="submit" class="btn btn-primary">Nahrát</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
-<form method="post" enctype="multipart/form-data" asp-controller="FileXmlUpload" asp-action="Upload">
-    @Html.AntiForgeryToken()
-    Nahrát z xml
-    <div>
-        <input type="file" name="file" />
-    </div>
-    <div>
-        <input type="submit" value="Upload" />
-    </div>
-</form>

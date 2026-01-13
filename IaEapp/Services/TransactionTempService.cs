@@ -18,9 +18,10 @@ namespace IaEapp.Services {
             foreach (var transaction in transactions) {
                 temp.Add(transaction);
             }
-            return temp;
+            return temp.OrderByDescending(t => t.Date);
         }
         internal async Task CreateTrancastionAsync(TransactionTemp newTransaction) {
+            newTransaction.TransactionCategoryId = 8;
             await _dbContext.TransactionsTemp.AddAsync(newTransaction);
             await _dbContext.SaveChangesAsync();
         }
@@ -76,7 +77,6 @@ namespace IaEapp.Services {
             try {
                 await _transactionService.CreateTransactionAsync(newTransaction, userId);
             } catch (Exception ex) { Console.WriteLine($"Error during creating transaction: {ex}"); }
-
             var deleteTempTr = await _dbContext.TransactionsTemp.FindAsync(transactionTemp.Id);
             _dbContext.TransactionsTemp.Remove(deleteTempTr);
             await _dbContext.SaveChangesAsync();

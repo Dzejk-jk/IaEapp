@@ -33,15 +33,17 @@ namespace IaEapp.Controllers {
                 pageNumber = 1;
             else
                 q = currentFilter;
+            ViewData["CurrentFilter"] = q;
 
             ViewData["CurrentFilter"] = q;
 
             if (!string.IsNullOrEmpty(q)) {
                 transactionsQuery = transactionsQuery.Where(t => t.Description.ToUpper().Contains(q.ToUpper()) ||
-                                                            t.TransactionCategoryName.ToUpper().Contains(q.ToUpper()) ||
-                                                            t.Amount.ToString().Contains(q));
+                                                                 t.TransactionCategoryName.ToUpper().Contains(q.ToUpper()) ||
+                                                                 t.Amount.ToString().Contains(q.ToUpper()) ||
+                                                                 t.Date.ToString("yyyy-MM-dd").Contains(q));
             }
-
+                                        
             transactionsQuery = _transactionService.TransactionFilters(sortOrder, transactionsQuery);
             var paginatedList = _transactionService.Pagination(pageNumber, transactionsQuery);
             return View(paginatedList);

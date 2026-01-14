@@ -4,6 +4,8 @@ Webová aplikace pro správu osobních financí zaměřená na **evidenci příj
 
 Aplikace je navržena s důrazem na **oddělení uživatelských dat**, bezpečnost a rozšiřitelnost.
 
+Url: https://iaeapp.azurewebsites.net/
+
 ---
 
 ## Přehled aplikace
